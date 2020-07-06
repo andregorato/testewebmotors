@@ -1,0 +1,60 @@
+﻿@model Application.ViewModels.AnuncioViewModel
+
+@{
+    ViewData["Title"] = "Gerenciamento de Anúncios";
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+
+
+
+<div class="content">
+    <h3 class="page-header">Detalhe</h3>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <p><strong>@Html.DisplayNameFor(model => model.ID)</strong></p>
+
+            <p>@Html.DisplayFor(model => model.ID)</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>@Html.DisplayNameFor(model => model.Marca)</strong></p>
+            <p>@Html.DisplayFor(model => model.Marca)</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>@Html.DisplayNameFor(model => model.Modelo)</strong></p>
+            <p>@Html.DisplayFor(model => model.Modelo)</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>@Html.DisplayNameFor(model => model.Versao)</strong></p>
+            <p>@Html.DisplayFor(model => model.Versao)</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>@Html.DisplayNameFor(model => model.Ano)</strong></p>
+            <p>@Html.DisplayFor(model => model.Ano)</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>@Html.DisplayNameFor(model => model.Quilometragem)</strong></p>
+            <p>@Html.DisplayFor(model => model.Quilometragem)</p>
+        </div>
+
+        <div class="col-md-8">
+            <p><strong>@Html.DisplayNameFor(model => model.Observacao)</strong></p>
+            <p>@Html.DisplayFor(model => model.Observacao)</p>
+        </div>
+    </div>
+
+    <div id="actions" class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Voltar", "Index", "Home", null, new { @class = "btn btn-primary" })
+            @*<a href="edit.html" class="btn btn-default">Editar</a>
+                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-modal">Excluir</a>*@
+        </div>
+
+    </div>
+</div>

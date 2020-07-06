@@ -1,0 +1,106 @@
+﻿@model IList<Application.ViewModels.AnuncioViewModel>
+
+@{
+    ViewData["Title"] = "Gerenciamento de Anúncios";
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="content">
+    <div id="top" class="row">
+        <div class="col-sm-3">
+            <a asp-controller="Home" asp-action="Add" class="btn btn-primary pull-right h2">Anunciar</a>
+
+        </div>
+    </div> <!-- /#top -->
+
+
+    <div id="list" class="row">
+
+        <div class="table-responsive col-md-12">
+            <table class="table table-striped" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Versão</th>
+                        <th>Ano</th>
+                        <th>Km</th>
+                        <th>Observação</th>
+                        <th class="actions">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        var id = "delete-modal" + item.ID;
+
+                        <!-- Modal -->
+                        <div class="modal" tabindex="-1" role="dialog" id="@id">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Excluir</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            Deseja realmente excluir <strong>
+                                                #@Html.DisplayFor(modelItem => item.ID) - @Html.DisplayFor(modelItem => item.Marca)
+                                            </strong>?
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        @Html.ActionLink("Excluir", "Delete", "Home", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <tr>
+                            <td class='table-content'>
+                                #@Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td class='table-content'>
+                                @Html.DisplayFor(modelItem => item.Marca)
+                            </td>
+                            <td class='table-content'>
+                                @Html.DisplayFor(modelItem => item.Modelo)
+                            </td>
+                            <td class='table-content'>
+                                @Html.DisplayFor(modelItem => item.Versao)
+                            </td>
+                            <td class='table-content'>
+                                @Html.DisplayFor(modelItem => item.Ano)
+                            </td>
+                            <td class='table-content'>
+                                @Html.DisplayFor(modelItem => item.Quilometragem)
+                            </td>
+                            <td class='table-content'>
+                                @Html.DisplayFor(modelItem => item.Observacao)
+                            </td>
+                            <td class="actions">
+                                @Html.ActionLink("Visualizar", "Detail", "Home", new { id = item.ID }, new { @class = "btn btn-success btn-xs" })
+                                @Html.ActionLink("Editar", "Edit", "Home", new { id = item.ID }, new { @class = "btn btn-warning btn-xs" })
+
+                                <a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#@id">Excluir</a>
+                            </td>
+                        </tr>
+
+
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div> <!-- /#list -->
+
+</div>

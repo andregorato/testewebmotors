@@ -1,0 +1,137 @@
+﻿@model Application.ViewModels.AnuncioViewModel
+
+@{
+    ViewData["Title"] = "Gerenciamento de Anúncios";
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="content">
+
+    <h3 class="page-header">Adicionar</h3>
+    <hr />
+    <form asp-action="Add">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label asp-for="Marca" class="control-label">Marca</label>
+                <select asp-for="Marca" disabled id="combo-marcas" class="form-control">
+                </select>
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Modelo" class="control-label">Modelo</label>
+                <select asp-for="Modelo" disabled id="combo-modelos" class="form-control">
+                </select>
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Versao" class="control-label">Versão</label>
+                <select asp-for="Versao" disabled id="combo-versoes" class="form-control">
+                </select>
+                <span asp-validation-for="Versao" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label asp-for="Ano">Ano</label>
+                <input asp-for="Ano" type="number" class="form-control" placeholder="Ano">
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="Quilometragem">KM</label>
+                <input asp-for="Quilometragem" type="number" class="form-control" placeholder="KM">
+                <span asp-validation-for="Quilometragem" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-8">
+                <label asp-for="Observacao">Observação</label>
+                <textarea asp-for="Observacao" rows="3" class="form-control"></textarea>
+                <span asp-validation-for="Observacao" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success">Salvar</button>
+                @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-secondary" })
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(() => {
+            $("#combo-marcas").empty();
+            $('#combo-marcas').prop('disabled', 'disabled');
+            const urlRequest = `/Home/ObterMarcas/`
+
+            $.ajax({
+                url: urlRequest,
+                success: function (marcas) {
+                    $("#combo-marcas").append("<option value>-- Selecione a Marca --</option>")
+                    $.each(marcas, function (index, element) {
+                        $("#combo-marcas").append('<option value="' + element.id + "|" +  element.name + '">' + element.name + '</option>');
+                    });
+
+                    $('#combo-marcas').prop('disabled', false);
+                }
+            });
+        })
+
+
+
+        $("#combo-marcas").change(() => {
+            var marcaId = $("#combo-marcas").val().split("|")[0];
+
+
+            $("#combo-modelos").empty();
+            $('#combo-modelos').prop('disabled', 'disabled');
+            const urlRequest = `/Home/ObterModelos/${marcaId}`
+
+            $.ajax({
+                url: urlRequest,
+                success: function (modelos) {
+                    $("#combo-modelos").append("<option value>-- Selecione o Modelo --</option>")
+                    $.each(modelos, function (index, element) {
+                        $("#combo-modelos").append('<option value="' + element.id + "|" + element.name + '">' + element.name + '</option>');
+                    });
+
+                    $('#combo-modelos').prop('disabled', false);
+
+                }
+            });
+        });
+
+        $("#combo-modelos").change(() => {
+            var modeloId = $("#combo-modelos").val().split("|")[0];
+            $("#combo-versoes").empty();
+            $('#combo-versoes').prop('disabled', 'disabled');
+            const urlRequest = `/Home/ObterVersoes/${modeloId}`
+
+            $.ajax({
+                url: urlRequest,
+                success: function (versoes) {
+
+                    $("#combo-versoes").append("<option value>-- Selecione a Versão --</option>")
+                    $.each(versoes, function (index, element) {
+                        $("#combo-versoes").append('<option value="' + element.id + "|" + element.name + '">' + element.name + '</option>');
+                    });
+
+                    $('#combo-versoes').prop('disabled', false);
+                }
+            });
+
+        })
+
+    </script>
+}
